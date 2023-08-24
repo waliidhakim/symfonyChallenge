@@ -1,0 +1,49 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}GiftList index{% endblock %}
+
+{% block body %}
+    <h1>GiftList index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Status</th>
+                <th>Password</th>
+                <th>BeginDate</th>
+                <th>EndDate</th>
+                <th>Theme</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gift_list in gift_lists %}
+            <tr>
+                <td>{{ gift_list.id }}</td>
+                <td>{{ gift_list.title }}</td>
+                <td>{{ gift_list.description }}</td>
+                <td>{{ gift_list.image }}</td>
+                <td>{{ gift_list.status ? 'Yes' : 'No' }}</td>
+                <td>{{ gift_list.password }}</td>
+                <td>{{ gift_list.beginDate ? gift_list.beginDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ gift_list.endDate ? gift_list.endDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ gift_list.theme }}</td>
+                <td>
+                    <a href="{{ path('app_gift_list_show', {'id': gift_list.id}) }}">show</a>
+                    <a href="{{ path('app_gift_list_edit', {'id': gift_list.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_gift_list_new') }}">Create new</a>
+{% endblock %}

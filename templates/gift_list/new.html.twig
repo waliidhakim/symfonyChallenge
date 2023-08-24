@@ -1,0 +1,52 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}New GiftList{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .password-field-div {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Create new GiftList</h1>
+
+    {{ include('gift_list/_form.html.twig') }}
+
+    <a href="{{ path('app_gift_list_index') }}">back to list</a>
+{% endblock %}
+
+
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            const $statusCheckbox = $('#gift_list_status');
+            const $passwordDiv = $('#gift_list_password').closest('.mb-3'); // Cible directement la div englobante du champ password
+            const $passwordField = $('.gift_list_password');
+
+            // Masquer le champ mot de passe si la checkbox n'est pas cochée lors du chargement de la page
+            // if (!$statusCheckbox.is(':checked')) {
+            //     $passwordDiv.hide();
+            // }
+
+            if (!$statusCheckbox.is(':checked')) {
+                $passwordDiv.addClass('password-field-div');
+
+            } else {
+                $passwordDiv.removeClass('password-field-div');
+            }
+
+
+            $statusCheckbox.change(function() {
+                if ($(this).is(':checked')) {
+                    $passwordDiv.removeClass('password-field-div');
+                } else {
+                    $passwordDiv.addClass('password-field-div');
+                }
+            });
+        });
+    </script>
+{% endblock%}

@@ -1,0 +1,51 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Liste des personnes{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        {% for personne in personnes %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ personne.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ personne.firstname }} {{personne.name }}</h6>
+                    <p class="card-text">Age : {{ personne.age }} ans</p>
+                    <a href="{{ path('personne.detail', {'id' : personne.id}) }}" class="card-link">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('personne.delete', {'id' : personne.id}) }}" class="card-link">
+                            <i class="fa-solid fa-user-xmark"></i>
+                        </a>
+                        <a href="{{ path('personne.edit', {'id' : personne.id}) }}" class="card-link">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if isPaginated is defined and isPaginated %}
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" style="display:flex; align-items: center; justify-content: center ">
+                {% if page != 1 %}
+                    <li class="page-item"><a class="page-link" href="{{ path('personne.list.alls', {'page' : page - 1 , 'nbre' : nbre  }) }}">Previous</a></li>
+                {% endif %}
+
+                {% for i in 1..nbPage %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ path('personne.list.alls', {'page' : i , 'nbre' : nbre  }) }}">{{ i }}</a>
+                    </li>
+                {% endfor  %}
+
+                {% if page != nbPage %}
+                    <li class="page-item"><a class="page-link" href="{{ path('personne.list.alls', {'page' : page + 1 , 'nbre' : nbre  }) }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+
+{% endblock %}
