@@ -117,7 +117,7 @@ class GiftChoiceController extends AbstractController {
             $gift = $data['gift'];
             $email = $data['email'];
 
-            dump($gift);
+//            dump($gift);
 
             $gift->setIsChosen(true);
             $gift->setChosenByEmail($email); // $email étant l'adresse e-mail fournie par l'utilisateur.
