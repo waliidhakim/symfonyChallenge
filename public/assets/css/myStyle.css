@@ -1,0 +1,59 @@
+.profile-image {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                object-fit: cover; /* Pour s'assurer que l'image couvre la taille sans se déformer */
+}
+
+
+.toast {
+    font-size: 1.5rem ;
+    padding-top: 40px !important; ;
+}
+
+
+.gift-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/*.gift-list li {*/
+/*    padding-left: 25px;*/
+/*}*/
+
+.fou {
+    margin-right: 20px;
+    padding-left: 25px;
+}
+
+.fas{
+    margin-right: 25px;
+    border: solid black 3px;
+}
+
+html, body {
+    height: 100%;
+}
+
+/*.custom-card {*/
+/*    font-size: 24px;*/
+/*    display: flex;*/
+/*    !*flex-direction: column;*!*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    !*height: 100%;*!*/
+/*}*/
+
+
+.custom-card {
+    min-width: 300px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.custom-card .card-body {
+    font-size: 1.5rem;
+    text-align: center;
+}

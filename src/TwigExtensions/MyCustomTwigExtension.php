@@ -10,7 +10,8 @@ class MyCustomTwigExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('defaultImage', [$this, 'defaultImage'])
+            new TwigFilter('defaultImage', [$this, 'defaultImage']),
+            new TwigFilter('readableRoles', [$this, 'readableRoles'])
         ];
     }
 
@@ -22,5 +23,20 @@ class MyCustomTwigExtension extends AbstractExtension
         }
 
         return $path;
+    }
+
+    public function readableRoles(array $roles) : string
+    {
+        $readableRoles = [];
+        foreach ($roles as $role) {
+            if ($role === 'ROLE_ADMIN') {
+                $readableRoles[] = 'Admin';
+            } elseif ($role === 'ROLE_USER') {
+                $readableRoles[] = 'User';
+            }
+            // Ajoutez des conditions supplémentaires pour d'autres rôles ici, si nécessaire
+        }
+
+        return implode(', ', $readableRoles);
     }
 }

@@ -6,6 +6,12 @@
         .password-field-div {
             /*display: none;*/
         }
+        /*.profile-image {*/
+        /*    width: 24px;*/
+        /*    height: 24px;*/
+        /*    border-radius: 50%;*/
+        /*    object-fit: cover; !* Pour s'assurer que l'image couvre la taille sans se déformer *!*/
+        /*}*/
     </style>
 {% endblock %}
 
@@ -18,7 +24,7 @@
 
     {{ include('gift_list/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_gift_list_index') }}">back to list</a>
+    <a href="{{ path('app_gift_list_index') }}" class="btn btn-secondary">back to list</a>
 
     {{ include('gift_list/_delete_form.html.twig') }}
 {% endblock %}
@@ -32,13 +38,6 @@
             const $passwordDiv = $('#gift_list_password').closest('.mb-3'); // Cible directement la div englobante du champ password
             const $passwordField = $('.gift_list_password');
 
-            // Masquer le champ mot de passe si la checkbox n'est pas cochée lors du chargement de la page
-            // if (!$statusCheckbox.is(':checked')) {
-            //     $passwordDiv.hide();
-            // }
-
-
-
 
             {% if gift_list.status == "No" %}
                 console.log("hello");
@@ -47,13 +46,6 @@
             {% else %}
                 $passwordDiv.removeClass('password-field-div');
             {% endif %}
-
-            // if (!$statusCheckbox.is(':checked')) {
-            //     $passwordDiv.addClass('password-field-div');
-            //
-            // } else {
-            //
-            // }
 
 
             $statusCheckbox.change(function() {

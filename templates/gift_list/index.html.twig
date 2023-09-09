@@ -1,40 +1,55 @@
 {% extends 'template.html.twig' %}
 
-{% block title %}GiftList index{% endblock %}
+{% block title %}My Gift lists{% endblock %}
 
 {% block body %}
-    <h1>GiftList index</h1>
-
+    <h1>My GiftLists</h1>
+    <a href="{{ path('app_gift_list_new') }}">Create new <i class="fa-solid fa-square-plus fa-xl"></i></a>
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+{#                <th>Id</th>#}
                 <th>Title</th>
                 <th>Description</th>
                 <th>Image</th>
                 <th>Status</th>
                 <th>Password</th>
-                <th>BeginDate</th>
-                <th>EndDate</th>
+                <th>Begin Date</th>
+                <th>End Date</th>
                 <th>Theme</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for gift_list in gift_lists %}
             <tr>
-                <td>{{ gift_list.id }}</td>
+{#                <td>{{ gift_list.id }}</td>#}
                 <td>{{ gift_list.title }}</td>
                 <td>{{ gift_list.description }}</td>
-                <td>{{ gift_list.image }}</td>
-                <td>{{ gift_list.status ? 'Yes' : 'No' }}</td>
-                <td>{{ gift_list.password }}</td>
-                <td>{{ gift_list.beginDate ? gift_list.beginDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ gift_list.endDate ? gift_list.endDate|date('Y-m-d H:i:s') : '' }}</td>
+{#                <td>{{ gift_list.image }}</td>#}
+                <td>
+                    {% if gift_list.image is null or gift_list.image == '' %}
+                        <a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-gift fa-xl"></i></a>
+                    {% else %}
+                        <a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('uploads/giftlists/' ~ gift_list.image) }}" alt="Profile Image" class="profile-image"></a>
+                    {% endif %}
+                </td>
+                <td>{{ gift_list.status ? 'Private' : 'Public' }}</td>
+                <td>{{ gift_list.password ? '*****' : 'None'}}</td>
+                <td>{{ gift_list.beginDate ? gift_list.beginDate|date('Y-m-d') : '' }}</td>
+                <td>{{ gift_list.endDate ? gift_list.endDate|date('Y-m-d') : '' }}</td>
                 <td>{{ gift_list.theme }}</td>
                 <td>
-                    <a href="{{ path('app_gift_list_show', {'id': gift_list.id}) }}">show</a>
-                    <a href="{{ path('app_gift_list_edit', {'id': gift_list.id}) }}">edit</a>
+                    <div class="d-flex align-items-center">
+                        <a href="{{ path('app_gift_list_show', {'id': gift_list.id}) }}"  class="m-2">
+                            <i class="fa-solid fa-circle-info fa-xl"></i>
+                        </a>
+                        <a href="{{ path('app_gift_list_edit', {'id': gift_list.id}) }}"  class="m-2">
+                            <i class="fa-solid fa-pen-to-square fa-xl"></i>
+                        </a>
+
+                        {{include('gift_list/_delete_form.html.twig') }}
+                    </div>
                 </td>
             </tr>
         {% else %}
@@ -45,5 +60,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_gift_list_new') }}">Create new</a>
+{#    <a href="{{ path('app_gift_list_new') }}">Create new</a>#}
 {% endblock %}

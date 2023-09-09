@@ -1,16 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'template.html.twig' %}
 
 {% block title %}GiftList{% endblock %}
 
 {% block body %}
     <h1>GiftList</h1>
+    <a href="{{ path('app_gift_new', {'listGift_id' : gift_list.id}) }}" class="btn btn-primary">Add Gift</a>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ gift_list.id }}</td>
-            </tr>
+{#            <tr>#}
+{#                <th>Id</th>#}
+{#                <td>{{ gift_list.id }}</td>#}
+{#            </tr>#}
             <tr>
                 <th>Title</th>
                 <td>{{ gift_list.title }}</td>
@@ -19,13 +20,13 @@
                 <th>Description</th>
                 <td>{{ gift_list.description }}</td>
             </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ gift_list.image }}</td>
-            </tr>
+{#            <tr>#}
+{#                <th>Image</th>#}
+{#                <td>{{ gift_list.image }}</td>#}
+{#            </tr>#}
             <tr>
                 <th>Status</th>
-                <td>{{ gift_list.status ? 'Yes' : 'No' }}</td>
+                <td>{{ gift_list.status ? 'Private' : 'Public' }}</td>
             </tr>
             <tr>
                 <th>Password</th>
@@ -33,22 +34,68 @@
             </tr>
             <tr>
                 <th>BeginDate</th>
-                <td>{{ gift_list.beginDate ? gift_list.beginDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ gift_list.beginDate ? gift_list.beginDate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
                 <th>EndDate</th>
-                <td>{{ gift_list.endDate ? gift_list.endDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ gift_list.endDate ? gift_list.endDate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
                 <th>Theme</th>
                 <td>{{ gift_list.theme }}</td>
             </tr>
+
+            <tr>
+                <th>Gifts Count</th>
+                <td>{{ gift_list.gifts.count }}</td>
+            </tr>
+
+            <tr>
+                <th>Gifts</th>
+                <td>
+                    <ul class="gift-list">
+                        {% for gift in gift_list.gifts %}
+                            <li class="fou d-flex align-items-center ">
+
+                                {% if gift.image is null or gift.image == '' %}
+                                    <i class="fas fa-gift"></i> {{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
+
+                                {% elseif gift.image starts with 'http' %}
+{#                                    <img src="{{ asset('uploads/gifts/' ~ gift.image) }}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>#}
+                                    <img src="{{ gift.image }}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
+
+                                {% else %}
+                                    <img src="{{ asset('uploads/gifts/' ~ gift.image) }}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
+{#                                    <img src="{{ gift.image }}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>#}
+                                {% endif %}
+
+                                <a href="{{ path('app_gift_edit', {'id': gift.id}) }}"  class="m-2">
+                                    <i class="fa-solid fa-pen-to-square fa-xl"></i>
+                                </a>
+                                {{ include('gift/_delete_form.html.twig') }}
+{#                                <i class="fas fa-gift"></i>#}
+
+                            </li>
+                        {% else %}
+                            <p>No Gifts yet</p>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+
         </tbody>
     </table>
+    <div class="d-flex align-items-center">
+        <a href="{{ path('app_gift_list_index') }}" class="m-2">
+            <i class="fa-solid fa-list fa-xl"></i>
+        </a>
 
-    <a href="{{ path('app_gift_list_index') }}">back to list</a>
+        <a href="{{ path('app_gift_list_edit', {'id': gift_list.id}) }}"  class="m-2">
+            <i class="fa-solid fa-pen-to-square fa-xl"></i>
+        </a>
 
-    <a href="{{ path('app_gift_list_edit', {'id': gift_list.id}) }}">edit</a>
+        {{ include('gift_list/_delete_form.html.twig') }}
 
-    {{ include('gift_list/_delete_form.html.twig') }}
+    </div>
+
 {% endblock %}

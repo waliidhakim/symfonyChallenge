@@ -11,6 +11,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.16",
         "dompdf/dompdf": "^2.0",
+        "fabpot/goutte": "^4.0",
         "fzaninotto/faker": "^1.5",
         "guzzlehttp/guzzle": "^7.7",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -46,6 +47,7 @@
         "symfonycasts/reset-password-bundle": "^1.17",
         "symfonycasts/verify-email-bundle": "^1.13",
         "twig/extra-bundle": "^2.12|^3.0",
+        "twig/intl-extra": "^3.7",
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {

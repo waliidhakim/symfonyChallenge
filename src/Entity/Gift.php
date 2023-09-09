@@ -32,6 +32,12 @@ class Gift
     #[ORM\ManyToOne(inversedBy: 'gifts')]
     private ?User $reservedBy = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isChosen = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $chosenByEmail = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +111,30 @@ class Gift
     public function setReservedBy(?User $reservedBy): static
     {
         $this->reservedBy = $reservedBy;
+
+        return $this;
+    }
+
+    public function isIsChosen(): ?bool
+    {
+        return $this->isChosen;
+    }
+
+    public function setIsChosen(?bool $isChosen): static
+    {
+        $this->isChosen = $isChosen;
+
+        return $this;
+    }
+
+    public function getChosenByEmail(): ?string
+    {
+        return $this->chosenByEmail;
+    }
+
+    public function setChosenByEmail(?string $chosenByEmail): static
+    {
+        $this->chosenByEmail = $chosenByEmail;
 
         return $this;
     }

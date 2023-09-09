@@ -1,0 +1,81 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>
+        {% if user.firstname and user.lastname %}
+            {{ [user.firstname, user.lastname]|join(' ') }}
+        {% else %}
+            User with the ID : {{ user.id }}
+        {% endif %}
+    </h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+
+            <tr>
+                <th>Firstname</th>
+                <td>{{ user.firstname | default("N/A") }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ user.lastname | default("N/A") }}</td>
+            </tr>
+
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+
+            {#<tr>
+                <th>Password</th>
+                <td>{{ user.password }}</td>
+            </tr>#}
+
+            <tr>
+                <th>IsVerified</th>
+                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+            </tr>
+
+            <tr>
+                <th>Image</th>
+                <td>{{ user.image | default("N/A")}}</td>
+            </tr>
+
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : 'N\A' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : 'N\A' }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ user.roles | readableRoles }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_index') }}">
+        <i class="fa-solid fa-list"></i>
+    </a>
+
+    <a href="{{ path('app_user_edit', {'id': user.id}) }}">
+        <i class="fa-solid fa-user-pen"></i>
+        {#edit#}
+    </a>
+
+    <a href="{{ path('app_user_delete', {'id': user.id}) }}">
+        <i class="fa-solid fa-user-xmark"></i>
+        {#edit#}
+    </a>
+
+
+
+{% endblock %}

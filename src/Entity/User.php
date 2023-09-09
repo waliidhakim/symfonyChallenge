@@ -3,17 +3,22 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Traits\TimeStampTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\HasLifecycleCallbacks()]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TimeStampTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -43,6 +48,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'reservedBy', targetEntity: Gift::class)]
     private Collection $gifts;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $firstname = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lastname = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    private ?int $age = null;
 
     public function __construct()
     {
@@ -221,6 +238,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $gift->setReservedBy(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): static
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): static
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(?int $age): static
+    {
+        $this->age = $age;
 
         return $this;
     }

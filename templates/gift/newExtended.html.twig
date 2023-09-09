@@ -1,0 +1,23 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}New Gift{% endblock %}
+
+{% block body %}
+
+{#    <h1>Add new Gift to "{{ giftList.title }}" Gift List</h1>#}
+
+    <h1>
+        Add new Gift to
+        {% if giftList.title is defined %}
+            "{{ giftList.title }}"
+        {% else %}
+            "Unnamed"
+        {% endif %}
+        Gift List
+    </h1>
+
+    {{ include('gift/_form.html.twig') }}
+
+{#    <button class="btn btn-primary"> Back to list </button>#}
+    <a href="{{ path('app_gift_index', {id : listGift_id }) }}" class="btn btn-primary">Back to list</a>
+{% endblock %}

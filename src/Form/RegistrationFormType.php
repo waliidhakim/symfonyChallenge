@@ -5,9 +5,12 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -17,7 +20,57 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
+            ->add('firstname', TextType::class, [
+                'attr' => [
+
+                ],
+                'label' => 'Firstname',
+                'constraints' =>[
+                    new NotBlank([
+                        'message' => 'Please enter a Firstname',
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'max' => 50,
+                        'minMessage' => 'This field should be at least {{ limit }} characters',
+                        'maxMessage' => 'This field should not exceed {{ limit }} characters',
+                        // max length allowed by Symfony for security reasons
+
+                    ]),
+                ]
+
+            ])
+            ->add('lastname', TextType::class, [
+                'attr' => [
+
+                ],
+                'label' => 'Lastname',
+                'constraints' =>[
+                    new NotBlank([
+                        'message' => 'Please enter a Lastname',
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'max' => 50,
+                        'minMessage' => 'This field should be at least {{ limit }} characters',
+                        'maxMessage' => 'This field should not exceed {{ limit }} characters',
+                        // max length allowed by Symfony for security reasons
+
+                    ]),
+                ]
+
+            ])
+            ->add('email', EmailType::class,[
+                'constraints' => [
+                            new NotBlank([
+                                'message' => 'Please enter an email',
+                            ]),
+                            new Email([
+                                'message' => 'Please enter a valid email.',
+                            ])
+                        ]
+            ])
+
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

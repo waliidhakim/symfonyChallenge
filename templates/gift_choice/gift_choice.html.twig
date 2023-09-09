@@ -1,0 +1,30 @@
+{#<form action="{{ path('gift_choice', {listGiftId: giftList.id}) }}" method="post">#}
+{#    {{ form_widget(form) }}#}
+{#    <input type="submit" value="Choisir ce cadeau">#}
+{#</form>#}
+
+
+{% extends 'template.html.twig' %}
+
+{% block title %}
+    Choose a gift
+{% endblock %}
+
+{% block body %}
+{#    <h1>Choose a Gift</h1>#}
+{#    <h2>Gift list : {{ giftList.title }}</h2>#}
+{#    <form action="{{ path('gift_choice', {listGiftId: giftList.id}) }}" method="post">#}
+{#        {{ form_widget(form) }}#}
+{#    </form>#}
+
+    <h1>Choose a Gift</h1>
+    <h2>Gift list: {{ giftList.title }}</h2>
+
+    {% if form.gift.vars.choices|length > 0 %}
+        <form action="{{ path('gift_choice', {listGiftId: giftList.id}) }}" method="post">
+            {{ form_widget(form) }}
+        </form>
+    {% else %}
+        <p>Sorry, all the gifts from this list have already been chosen!</p>
+    {% endif %}
+{% endblock %}

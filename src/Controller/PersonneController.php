@@ -30,7 +30,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 #[Route('/personne')]
-#[IsGranted('ROLE_USER')]
+//#[IsGranted('ROLE_USER')]
 class PersonneController extends AbstractController
 {
     public function __construct(private EventDispatcherInterface $dispatcher){
@@ -60,7 +60,7 @@ class PersonneController extends AbstractController
     }
 
     #[Route('/alls/{page?1}/{nbre?12}', name: 'personne.list.alls')]
-    #[IsGranted('ROLE_USER')]
+//    #[IsGranted('ROLE_USER')]
     public function indexAlls(ManagerRegistry $doctrine, $page, $nbre): Response
     {
         $repository = $doctrine->getRepository(Personne::class);

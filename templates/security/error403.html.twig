@@ -1,0 +1,8 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Access denied{% endblock %}
+
+{% block body %}
+    <h1>Access denied</h1>
+    <p>Sorry, you either don't have permission to access this page or you have to <a href="{{ path('app_login') }}">login </a>first.</p>
+{% endblock %}

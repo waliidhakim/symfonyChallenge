@@ -30,10 +30,14 @@
         </laba>
     </div>
     <div>
-        <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
+        <a href="{{ path('app_forgot_password_request') }}">Forgot your password ?</a>
     </div>
     <button class="btn btn-lg btn-primary mt-2" type="submit">
         Sign in
     </button>
+
+    <div>
+        New here ?<a href="{{ path('app_register') }}"> register</a>
+    </div>
 </form>
 {% endblock %}
