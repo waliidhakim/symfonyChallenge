@@ -46,9 +46,11 @@ class UserUpdateController extends AbstractController
 
             $photo = $form->get('image')->getData();
             if ($photo) {
-                $directory =  $this->getParameter('personnes_directory');
-                $newFilename = $uploaderService->uploadFile($photo, $directory);
 
+                $uploadsDirectory =  $this->getParameter('uploads_directory');
+//                $directory =  $uploadsDirectory . "/personnes";
+                $newFilename = $uploaderService->uploadFile($photo, "personnes");
+                //dd($newFilename);
                 $user->setImage($newFilename);
             }
 

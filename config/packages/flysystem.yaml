@@ -1,0 +1,17 @@
+# Read the documentation at https://github.com/thephpleague/flysystem-bundle/blob/master/docs/1-getting-started.md
+#flysystem:
+#    storages:
+#        default.storage:
+#            adapter: 'local'
+#            options:
+#                directory: '%kernel.project_dir%/var/storage/default'
+
+
+flysystem:
+    storages:
+        default.storage:
+            adapter: 'League\Flysystem\AwsS3v3\AwsS3Adapter'
+            options:
+                client: 'Aws\S3\S3Client'
+                bucket: 'challange-esgi'
+#                prefix: 'optional/prefix/path'
