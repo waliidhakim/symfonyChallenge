@@ -19,11 +19,22 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
         $admin1->setEmail('idirwalidhakim32@gmail.com');
         $admin1->setFirstname("Walid");
         $admin1->setLastname("idir");
+        $admin1->setIsVerified(true);
         $admin1->setPassword($this->hasher->hashPassword($admin1,'123456'));
         $admin1->setRoles(['ROLE_USER','ROLE_ADMIN']);
 
 
+        $admin2 = new User();
+        $admin2->setEmail('smythywerbon@gmail.com');
+        $admin2->setFirstname("Walid");
+        $admin2->setLastname("idir");
+        $admin2->setIsVerified(true);
+        $admin2->setPassword($this->hasher->hashPassword($admin2,'123456'));
+        $admin2->setRoles(['ROLE_USER','ROLE_ADMIN']);
 
+
+        $manager->persist($admin1);
+        $manager->persist($admin2);
 
         for($i=1;$i<=5;$i++)
         {

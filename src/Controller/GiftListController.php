@@ -50,8 +50,9 @@ class GiftListController extends AbstractController
 
             $photo = $form->get('image')->getData();
             if ($photo) {
-                $directory =  $this->getParameter('giftlists_directory');
-                $newFilename = $uploaderService->uploadFile($photo, $directory);
+//                $directory =  $this->getParameter('giftlists_directory');
+//                $newFilename = $uploaderService->uploadFile($photo, $directory);
+                $newFilename = $uploaderService->uploadFile($photo, "giftlists");
 
                 $giftList->setImage($newFilename);
             }
