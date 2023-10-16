@@ -66,7 +66,7 @@
 
                                 {% else %}
                                     {% if app.environment == 'prod' %}
-                                        <img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/gifs/{{gift.image}}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
+                                        <img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/gifts/{{gift.image}}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
                                        
                                     {% else %}
                                         <img src="{{ asset('uploads/gifts/' ~ gift.image) }}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
