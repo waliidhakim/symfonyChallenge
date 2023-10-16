@@ -63,7 +63,7 @@ class ScrappingService
             $price = $crawler->filter('.a-offscreen')->text();
             $image = $crawler->filter('.imgTagWrapper img')->attr('src');
         } catch (\Exception $exc) {
-            dd($exc);
+            // dd($exc);
             throw $exc;
         }
 
