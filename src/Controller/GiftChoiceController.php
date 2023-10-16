@@ -127,7 +127,7 @@ class GiftChoiceController extends AbstractController {
 
 
             $message = (new TemplatedEmail())
-                ->from(new Address('idirwalidhakim31@gmail.com', 'IDIR Walid Challenge Symfony6'))
+                ->from(new Address('idirwalidhakim32@gmail.com', 'IDIR Walid Challenge Symfony6'))
                 ->to($giftList->getUser()->getEmail())
                 ->subject('Gift Chosen !')
                 ->htmlTemplate('email/gift-chosen.html.twig')
@@ -137,7 +137,7 @@ class GiftChoiceController extends AbstractController {
 
 
             $reminderMessage = (new TemplatedEmail())
-                ->from(new Address('idirwalidhakim31@gmail.com', 'IDIR Walid Challenge Symfony6'))
+                ->from(new Address('idirwalidhakim32@gmail.com', 'IDIR Walid Challenge Symfony6'))
                 ->to($email)  // L'adresse e-mail de l'utilisateur qui a choisi le cadeau
                 ->subject('Gift Reminder!')
                 ->htmlTemplate('gift_choice/gift_reminder.html.twig')
@@ -201,7 +201,7 @@ class GiftChoiceController extends AbstractController {
 
         // Envoyer un mail au créateur pour l'informer
         $infoMessage = (new TemplatedEmail())
-            ->from(new Address('idirwalidhakim31@gmail.com', 'IDIR Walid Challenge Symfony6'))
+            ->from(new Address('idirwalidhakim32@gmail.com', 'IDIR Walid Challenge Symfony6'))
             ->to($gift->getGiftList()->getUser()->getEmail())
             ->subject('Reservation Cancelled!')
             ->htmlTemplate('email/gift-reservation-canceled.html.twig')
