@@ -31,8 +31,33 @@
                     {% if gift_list.image is null or gift_list.image == '' %}
                         <a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-gift fa-xl"></i></a>
                     {% else %}
-                        <a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('uploads/giftlists/' ~ gift_list.image) }}" alt="Profile Image" class="profile-image"></a>
+
+                        {% if app.environment == 'prod' %}
+                            {# Ici, mettez le chemin complet vers votre image sur le bucket S3 #}
+                            {# <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/personnes/{{ user.image }}" alt="Image" class="profile-image"></a> #}
+    {#                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/personnes/carlo-tentacule-250-65088328e622f.jpg" alt="Profile Image" class="profile-image"></a>#}
+                            <a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/giftlists/{{ gift_list.image }} " alt="Gift Image" class="profile-image"></a>
+                        {% else %}
+                            {# Ici, c'est le chemin local vers l'image #}
+                            {# <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('uploads/personnes/' ~ user.image) }}" alt="Profile Image" class="profile-image"></a> #}
+                            <a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{asset('uploads/giftlists/' ~ gift_list.image) }}" alt="Gift Image" class="profile-image"></a>
+                        {% endif %}
+
+                        
                     {% endif %}
+
+                    {# {% if user.image is null or user.image == '' %}
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    {% else %}
+                        {% if app.environment == 'prod' %}
+                            {# Ici, mettez le chemin complet vers votre image sur le bucket S3 
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/personnes/{{ user.image }}" alt="Image" class="profile-image"></a>
+    {#                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/personnes/carlo-tentacule-250-65088328e622f.jpg" alt="Profile Image" class="profile-image"></a>#}
+                        {# {% else %} #}
+                            {# Ici, c'est le chemin local vers l'image 
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('uploads/personnes/' ~ user.image) }}" alt="Profile Image" class="profile-image"></a>
+                        {% endif %}
+                    {% endif %} #}
                 </td>
                 <td>{{ gift_list.status ? 'Private' : 'Public' }}</td>
                 <td>{{ gift_list.password ? '*****' : 'None'}}</td>
