@@ -31,7 +31,7 @@ class GiftChoiceController extends AbstractController {
         $this->myEnv = $myEnv;
     }
 
-    #[Route(' ', name: 'gift_choice', methods: ['GET', 'POST'])]
+    #[Route('/gift-choice/{listGiftId}', name: 'gift_choice', methods: ['GET', 'POST'])]
     public function giftChoice(int $listGiftId, Request $request, GiftListRepository $giftListRepo,  MailerInterface $mailer, EntityManagerInterface $manager) {
 
         $giftList = $giftListRepo->find($listGiftId);
