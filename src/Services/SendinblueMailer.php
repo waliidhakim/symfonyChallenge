@@ -55,7 +55,8 @@ class SendinblueMailer
     {
 //        $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', $this->sendinblueApiKey);
 //        dd($this->replyTo);
-        $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', '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');
+        // $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', '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');
+        $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', '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');
 
         $apiInstance = new TransactionalEmailsApi(new Client(), $config);
 
