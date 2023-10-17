@@ -44,7 +44,8 @@ class UserController extends AbstractController
     {
         $user = new User();
         $form = $this->createForm(User1Type::class, $user);
-        $form->handleRequest($request);
+        $form->remove('password');
+        $for->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -111,7 +112,7 @@ class UserController extends AbstractController
             if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
                 $entityManager->remove($user);
                 $entityManager->flush();
-                $this->addFlash('success', 'The User has been updated successfully');
+                $this->addFlash('success', 'The User has been deleted successfully');
             }
         }
         catch(\Exception $exc)
