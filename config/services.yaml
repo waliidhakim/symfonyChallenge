@@ -79,4 +79,4 @@ services:
 
     App\Controller\GiftChoiceController:
       arguments:
-            $envVariable: '%env(APP_ENV)%'
+            $myEnv: '%env(APP_ENV)%'
