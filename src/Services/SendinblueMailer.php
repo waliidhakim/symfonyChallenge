@@ -64,10 +64,10 @@ class SendinblueMailer
         $body = 'Hello ,<br><br>Thank you for registering on our website!';
 
         $sendSmtpEmail = new SendSmtpEmail([
-            'to' => [new SendSmtpEmailTo(['email' => 'idirwalidhakim32@gmail.com'])],
+            'to' => [new SendSmtpEmailTo(['email' => 'idirwalidhakim31@gmail.com'])],
             'subject' => $subject,
             'htmlContent' => $content,
-            'sender' => ['name' => 'Challenge', 'email' => 'idirwalidhakim31@gmail.com', 'replyTo' => $this->replyTo],
+            'sender' => ['name' => 'Challenge', 'email' => 'idirwalidhakim32@gmail.com', 'replyTo' => $this->replyTo],
             'replyTo' => ['name' => 'Reply', 'email' => $this->replyTo],
 
         ]);
