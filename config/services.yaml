@@ -76,3 +76,7 @@ services:
     App\Services\UploaderService:
       arguments:
         $env: '%env(APP_ENV)%'
+
+    App\Controller\GiftChoiceController:
+      arguments:
+            $envVariable: '%env(APP_ENV)%'

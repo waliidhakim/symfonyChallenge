@@ -24,7 +24,14 @@ class GiftChoiceController extends AbstractController {
 //     * @Route("/gift-choice/{listGiftId}", name="gift_choice", methods={"GET", "POST"})
 //     */
 
-    #[Route('/gift-choice/{listGiftId}', name: 'gift_choice', methods: ['GET', 'POST'])]
+    private $myEnv;
+
+    public function __construct(string $myEnv)
+    {
+        $this->myEnv = $myEnv;
+    }
+
+    #[Route(' ', name: 'gift_choice', methods: ['GET', 'POST'])]
     public function giftChoice(int $listGiftId, Request $request, GiftListRepository $giftListRepo,  MailerInterface $mailer, EntityManagerInterface $manager) {
 
         $giftList = $giftListRepo->find($listGiftId);
@@ -92,8 +99,14 @@ class GiftChoiceController extends AbstractController {
                             $gift->getPurchaseLink()
                         );
                     } else {
+                        $imagePath = "/uploads/gifts";
+                        if($this->myEnv == "prod")
+                        {
+                            $imagePath = "https://challange-esgi.s3.eu-central-1.amazonaws.com/gifts";
+                        }
                         $label = sprintf(
-                            '<img src="/uploads/gifts/%s" alt="Gift Image" class="profile-image"> %s - %s$ <a href="%s">Link</a>',
+                            '<img src="%s/%s" alt="Gift Image" class="profile-image"> %s - %s$ <a href="%s">Link</a>',
+                            $imagePath,
                             $gift->getImage(),
                             $gift->getName(),
                             $gift->getPrice(),
