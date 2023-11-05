@@ -56,12 +56,10 @@ class ScrappingService
     public function scrapeProductDetails(string $url): array
     {
         $crawler = $this->client->request('GET', $url);
-
+        dd($crawler);
         // Exemple d'extraction des informations. A adapter en fonction des sites cibles.
         try {
             // $name = $crawler->filter("#productTitle")->text();
-            $test = $crawler->filter('.on-img_slider img')->attr('src');
-            dd($test);
             $price = $crawler->filter('.a-offscreen')->text();
             $name = $crawler->filter('#productTitle')->text('', true);
             $image = $crawler->filter('#imgTagWrapper img')->attr('src');
