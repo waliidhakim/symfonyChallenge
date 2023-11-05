@@ -9,7 +9,7 @@
 	<a href="{{ path('app_gift_new', {'listGift_id' : gift_list.id}) }}" class="btn btn-primary">Add Gift</a>
 
 
-	<button id="copyButton" data-clipboard-text="http://challenge-symfony6-1-74638974b8fa.herokuapp.com/gift/listgift-choice/{{ gift_list.id }}">
+	<button id="copyButton" class="btn btn-primary" data-clipboard-text="http://challenge-symfony6-1-74638974b8fa.herokuapp.com/gift/listgift-choice/{{ gift_list.id }}">
 		Share Link
 		<i class="fa-solid fa-share"></i>
 	</button>
@@ -156,11 +156,8 @@
 	<script>
 		document.getElementById('copyButton').addEventListener('click', function (event) {
 const clipboardText = event.target.getAttribute('data-clipboard-text');
-navigator.clipboard.writeText("jkfghjkjkxfh").then(function () {
-alert('Link copied to clipboard!');
-}).catch(function (error) {
-alert('Failed to copy link. Please copy it manually : ', clipboardText);
-});
+alert('Please copy it this link and share it to your fiends : ', clipboardText);
+
 });
 	</script>
 
