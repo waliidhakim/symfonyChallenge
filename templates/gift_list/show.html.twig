@@ -151,12 +151,15 @@
 {% endblock %}
 
 {% block javascripts %}
-	function copyToClipboard(element) {
-					        let link = element.getAttribute('data-href') + '{{ gift_lists[0].id }}'; 
-					        navigator.clipboard.writeText(link).then(function() {
-					            alert('Link copied to clipboard!');
-					        }).catch(function(error) {
-					            alert('Error copying the link. Please copy it manually : ', link  );
-					        });
-					    }
+	<script>
+		function copyToClipboard(element) {
+let link = element.getAttribute('data-href') + '{{ gift_lists[0].id }}';
+navigator.clipboard.writeText(link).then(function () {
+alert('Link copied to clipboard!');
+}).catch(function (error) {
+alert('Error copying the link. Please copy it manually : ', link);
+});
+}
+	</script>
+
 {% endblock %}
