@@ -97,7 +97,7 @@ class ScrappingService
 
     public function scrapeProductDetails(string $url): array
     {
-        sleep(rand(2, 5));
+        sleep(rand(1, 2));
         $crawler = $this->client->request('GET', $url);
 
         // Vérifiez si un CAPTCHA a été déclenché
@@ -115,7 +115,7 @@ class ScrappingService
             // $image = $crawler->filter('.imgTagWrapper img')->attr('src');
 
             $name = $crawler->filter('.detailHeadline')->text('', true);
-            $price = $crawler->filter('.price ')->text();
+            $price = $crawler->filter('.price')->text();
             $image = $crawler->filter('.prdMainPhoto img')->attr('src');
         } catch (\Exception $exc) {
             dd($exc);
