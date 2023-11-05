@@ -58,7 +58,7 @@ class UserController extends AbstractController
             //                 $user->setImage($newFilename);
             //             }
             if ($photo) {
-                $newFilename = $uploaderService->uploadFile($photo, "users");
+                $newFilename = $uploaderService->uploadFile($photo, "personnes");
 
                 $user->setImage($newFilename);
             }
