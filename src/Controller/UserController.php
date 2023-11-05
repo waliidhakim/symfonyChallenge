@@ -117,7 +117,7 @@ class UserController extends AbstractController
         }
         catch(\Exception $exc)
         {
-            dd($exc);
+            //dd($exc);
             throw($exc);
         }
         
