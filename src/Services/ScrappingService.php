@@ -59,17 +59,17 @@ class ScrappingService
 
         // Exemple d'extraction des informations. A adapter en fonction des sites cibles.
         try {
-            // $name = $crawler->filter("#productTitle")->text();
-            // $price = $crawler->filter('.a-offscreen')->text();
+            $name = $crawler->filter("#productTitle")->text();
+            $price = $crawler->filter('.a-offscreen')->text();
             $image = $crawler->filter('#imgTagWrapper img')->attr('src');
         } catch (\Exception $exc) {
-            // dd($exc);
+            dd($exc);
             throw $exc;
         }
 
         return [
-            // 'name' => $name,
-            // 'price' => $price,
+            'name' => $name,
+            'price' => $price,
             'image' => $image,
         ];
     }
