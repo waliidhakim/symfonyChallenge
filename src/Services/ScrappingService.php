@@ -61,7 +61,7 @@ class ScrappingService
         try {
             $name = $crawler->filter("#productTitle")->text();
             $price = $crawler->filter('.a-offscreen')->text();
-            $image = $crawler->filter('.imgTagWrapper img')->attr('src');
+            $image = $crawler->filter('#imgTagWrapper img')->attr('src');
         } catch (\Exception $exc) {
             // dd($exc);
             throw $exc;
