@@ -118,7 +118,7 @@ class ScrappingService
             $price = $crawler->filter('.price ')->text();
             $image = $crawler->filter('.prdMainPhoto img')->attr('src');
         } catch (\Exception $exc) {
-            // dd($exc);
+            dd($exc);
             throw $exc;
         }
 
