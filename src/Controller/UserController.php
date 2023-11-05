@@ -25,10 +25,10 @@ class UserController extends AbstractController
         $nbPersonne = $userRepository->count([]);
         $nbPage = ceil($nbPersonne / 10);
 
-        $users = $userRepository->findBy([], [], 10, ($page-1)*10);
+        $users = $userRepository->findBy([], [], 10, ($page - 1) * 10);
 
         return $this->render('user/index.html.twig', [
-//            'users' => $userRepository->findAll(),
+            //            'users' => $userRepository->findAll(),
             'users' => $users,
             'isPaginated' => true,
             'nbPersonne' => $nbPersonne,
@@ -50,11 +50,16 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $photo = $form->get('image')->getData();
+            //             if ($photo) {
+            //                 $uploadsDirectory =  $this->getParameter('uploads_directory');
+            // //                $directory =  $uploadsDirectory . "/personnes";
+            //                 $newFilename = $uploaderService->uploadFile($photo, "personnes");
+            //                 //dd($newFilename);
+            //                 $user->setImage($newFilename);
+            //             }
             if ($photo) {
-                $uploadsDirectory =  $this->getParameter('uploads_directory');
-//                $directory =  $uploadsDirectory . "/personnes";
-                $newFilename = $uploaderService->uploadFile($photo, "personnes");
-                //dd($newFilename);
+                $newFilename = $uploaderService->uploadFile($photo, "users");
+
                 $user->setImage($newFilename);
             }
 
@@ -108,19 +113,17 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        try{
-            if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        try {
+            if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
                 $entityManager->remove($user);
                 $entityManager->flush();
                 $this->addFlash('success', 'The User has been deleted successfully');
             }
-        }
-        catch(\Exception $exc)
-        {
+        } catch (\Exception $exc) {
             //dd($exc);
-            throw($exc);
+            throw ($exc);
         }
-        
+
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
