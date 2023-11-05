@@ -61,15 +61,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $age = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ResetPasswordRequest::class, cascade: ['remove'])]
-    private Collection $resetPasswordRequests;
-
     public function __construct()
     {
         $this->personnes = new ArrayCollection();
         $this->giftLists = new ArrayCollection();
         $this->gifts = new ArrayCollection();
-        $this->resetPasswordRequests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -184,14 +180,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isVerified = $isVerified;
 
         return $this;
-    }
-
-    /**
-     * @return Collection|ResetPasswordRequest[]
-     */
-    public function getResetPasswordRequests(): Collection
-    {
-        return $this->resetPasswordRequests;
     }
 
     /**
