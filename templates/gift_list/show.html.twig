@@ -1,107 +1,162 @@
 {% extends 'template.html.twig' %}
 
-{% block title %}GiftList{% endblock %}
+{% block title %}GiftList
+{% endblock %}
 
 {% block body %}
-    <h1>GiftList</h1>
-    <a href="{{ path('app_gift_new', {'listGift_id' : gift_list.id}) }}" class="btn btn-primary">Add Gift</a>
+	<h1>GiftList</h1>
+	<button onclick="copyToClipboard(this)" data-href="http://challenge-symfony6-1-74638974b8fa.herokuapp.com/gift/listgift-choice/" class="btn btn-primary">
+		Share Link
+		<i class="fa-solid fa-share"></i>
+	</button>
+	<a href="{{ path('app_gift_new', {'listGift_id' : gift_list.id}) }}" class="btn btn-primary">Add Gift</a>
 
-    <table class="table">
-        <tbody>
-{#            <tr>#}
-{#                <th>Id</th>#}
-{#                <td>{{ gift_list.id }}</td>#}
-{#            </tr>#}
-            <tr>
-                <th>Title</th>
-                <td>{{ gift_list.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ gift_list.description }}</td>
-            </tr>
-{#            <tr>#}
-{#                <th>Image</th>#}
-{#                <td>{{ gift_list.image }}</td>#}
-{#            </tr>#}
-            <tr>
-                <th>Status</th>
-                <td>{{ gift_list.status ? 'Private' : 'Public' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ gift_list.password }}</td>
-            </tr>
-            <tr>
-                <th>BeginDate</th>
-                <td>{{ gift_list.beginDate ? gift_list.beginDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>EndDate</th>
-                <td>{{ gift_list.endDate ? gift_list.endDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Theme</th>
-                <td>{{ gift_list.theme }}</td>
-            </tr>
+	<table class="table">
+		<tbody>
+			{#            <tr>#}
+			{#                <th>Id</th>#}
+			{#                <td>{{ gift_list.id }}</td>#}
+			{#            </tr>#}
+				<tr>
+					<th>
+				Title
+				</th>
+					<td>
+				{{ gift_list.title }}
+			</td>
+			</tr>
+				<tr>
+					<th>
+				Description
+				</th>
+					<td>
+				{{ gift_list.description }}
+			</td>
+			</tr>
+			{#            <tr>#}
+			{#                <th>Image</th>#}
+			{#                <td>{{ gift_list.image }}</td>#}
+				{#            </tr>#}
+					<tr>
+				<th>
+				Status
+					</th>
+				<td>
+			{{ gift_list.status ? 'Private' : 'Public' }}
+			</td>
+				</tr>
+					<tr>
+				<th>
+				Password
+					</th>
+				<td>
+			{{ gift_list.password }}
+			</td>
+				</tr>
+					<tr>
+				<th>
+				BeginDate
+					</th>
+				<td>
+			{{ gift_list.beginDate ? gift_list.beginDate|date('Y-m-d') : '' }}
+			</td>
+				</tr>
+					<tr>
+				<th>
+				EndDate
+					</th>
+				<td>
+			{{ gift_list.endDate ? gift_list.endDate|date('Y-m-d') : '' }}
+			</td>
+				</tr>
+					<tr>
+				<th>
+				Theme
+					</th>
+				<td>
+			{{ gift_list.theme }}
+			</td>
+				</tr>
+					<tr>
+				<th>
+				Gifts Count
+					</th>
+				<td>
+			{{ gift_list.gifts.count }}
+			</td>
+				</tr>
+					<tr>
+				<th>
+				Gifts
+					</th>
+						<td> <ul class="gift-list">{% for gift in gift_list.gifts %}
+							<li class="fou d-flex align-items-center ">
 
-            <tr>
-                <th>Gifts Count</th>
-                <td>{{ gift_list.gifts.count }}</td>
-            </tr>
+								{% if gift.image is null or gift.image == '' %}
+									<i class="fas fa-gift"></i>
+									{{ gift.name }}
+									-
+									{{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
 
-            <tr>
-                <th>Gifts</th>
-                <td>
-                    <ul class="gift-list">
-                        {% for gift in gift_list.gifts %}
-                            <li class="fou d-flex align-items-center ">
+								{% elseif gift.image starts with 'http' %}
+									{#                                    <img src="{{ asset('uploads/gifts/' ~ gift.image) }}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>#}
+									<img src="{{ gift.image }}" alt="Gift Image" class="profile-image">{{ gift.name }}
+									-
+									{{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
 
-                                {% if gift.image is null or gift.image == '' %}
-                                    <i class="fas fa-gift"></i> {{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
+								{% else %}
+									{% if app.environment == 'prod' %}
+										<img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/gifts/{{gift.image}}" alt="Gift Image" class="profile-image">{{ gift.name }}
+										-
+										{{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
 
-                                {% elseif gift.image starts with 'http' %}
-{#                                    <img src="{{ asset('uploads/gifts/' ~ gift.image) }}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>#}
-                                    <img src="{{ gift.image }}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
+									{% else %}
+										<img src="{{ asset('uploads/gifts/' ~ gift.image) }}" alt="Gift Image" class="profile-image">{{ gift.name }}
+										-
+										{{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
 
-                                {% else %}
-                                    {% if app.environment == 'prod' %}
-                                        <img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/gifts/{{gift.image}}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
-                                       
-                                    {% else %}
-                                        <img src="{{ asset('uploads/gifts/' ~ gift.image) }}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>
-                                        
-                                    {% endif %}
-{#                                    <img src="{{ gift.image }}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>#}
-                                {% endif %}
+									{% endif %}
+									{#                                    <img src="{{ gift.image }}" alt="Gift Image" class="profile-image">{{ gift.name }} - {{ gift.price }}$<a href="{{ gift.purchaseLink }}">Link</a>#}
+								{% endif %}
 
-                                <a href="{{ path('app_gift_edit', {'id': gift.id}) }}"  class="m-2">
-                                    <i class="fa-solid fa-pen-to-square fa-xl"></i>
-                                </a>
-                                {{ include('gift/_delete_form.html.twig') }}
-{#                                <i class="fas fa-gift"></i>#}
+								<a href="{{ path('app_gift_edit', {'id': gift.id}) }}" class="m-2">
+									<i class="fa-solid fa-pen-to-square fa-xl"></i>
+								</a>
+								{{ include('gift/_delete_form.html.twig') }}
+								{#                                <i class="fas fa-gift"></i>#}
 
-                            </li>
-                        {% else %}
-                            <p>No Gifts yet</p>
-                        {% endfor %}
-                    </ul>
-                </td>
-            </tr>
+							</li>
+						{% else %}
+							<p>No Gifts yet</p>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
 
-        </tbody>
-    </table>
-    <div class="d-flex align-items-center">
-        <a href="{{ path('app_gift_list_index') }}" class="m-2">
-            <i class="fa-solid fa-list fa-xl"></i>
-        </a>
+		</tbody>
+	</table>
+	<div class="d-flex align-items-center">
+		<a href="{{ path('app_gift_list_index') }}" class="m-2">
+			<i class="fa-solid fa-list fa-xl"></i>
+		</a>
 
-        <a href="{{ path('app_gift_list_edit', {'id': gift_list.id}) }}"  class="m-2">
-            <i class="fa-solid fa-pen-to-square fa-xl"></i>
-        </a>
+		<a href="{{ path('app_gift_list_edit', {'id': gift_list.id}) }}" class="m-2">
+			<i class="fa-solid fa-pen-to-square fa-xl"></i>
+		</a>
 
-        {{ include('gift_list/_delete_form.html.twig') }}
+		{{ include('gift_list/_delete_form.html.twig') }}
 
-    </div>
+	</div>
 
+{% endblock %}
+
+{% block javascripts %}
+	function copyToClipboard(element) {
+				        let link = element.getAttribute('data-href') + '{{ gift_lists[0].id }}'; 
+				        navigator.clipboard.writeText(link).then(function() {
+				            alert('Link copied to clipboard!');
+				        }).catch(function(error) {
+				            alert('Error copying the link. Please copy it manually : ', link  );
+				        });
+				    }
 {% endblock %}

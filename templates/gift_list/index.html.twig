@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1>My GiftLists</h1>
+    
     <a href="{{ path('app_gift_list_new') }}">Create new <i class="fa-solid fa-square-plus fa-xl"></i></a>
     <table class="table">
         <thead>
@@ -90,4 +91,13 @@
 
 
 
-        
+{% block javascripts %}
+     function copyToClipboard(element) {
+        let link = element.getAttribute('data-href') + '{{ gift_lists[0].id }}'; 
+        navigator.clipboard.writeText(link).then(function() {
+            alert('Link copied to clipboard!');
+        }).catch(function(error) {
+            alert('Error copying link: ', error);
+        });
+    }
+{% endblock %}
