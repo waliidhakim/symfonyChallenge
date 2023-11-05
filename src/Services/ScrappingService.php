@@ -100,32 +100,26 @@ class ScrappingService
         sleep(rand(1, 2));
         $crawler = $this->client->request('GET', $url);
 
-        // Vérifiez si un CAPTCHA a été déclenché
+
         if ($crawler->filter('title')->text() == 'Robot Check') {
-            // Gérer le CAPTCHA ou arrêter le processus ici
+
             throw new \Exception('CAPTCHA déclenché - arrêt du scraping pour cette URL.');
         }
 
-        // dd($crawler);
-        // Exemple d'extraction des informations. A adapter en fonction des sites cibles.
-        try {
-            // $name = $crawler->filter("#productTitle")->text();
-            // $name = $crawler->filter('#productTitle')->text('', true);
-            // $price = $crawler->filter('.a-offscreen')->text();
-            // $image = $crawler->filter('.imgTagWrapper img')->attr('src');
 
-            $name = $crawler->filter('.detailHeadline')->text('', true);
-            //$price = $crawler->filter('#prdRightCol > section > div.buyBoxBlock > div > div.headerRecommandedOffer.spaceBetween.dspflexStart > div:nth-child(1) > div > p.price.typeNew.spacerBottomXs')->text();
-            $image = $crawler->filter('.prdMainPhoto img')->attr('src');
+        try {
+
+            $name = $crawler->filter('#productTitle')->text('', true);
+            $price = $crawler->filter('.a-offscreen')->text();
+            $image = $crawler->filter('.imgTagWrapper img')->attr('src');
         } catch (\Exception $exc) {
-            dd($exc);
+
             throw $exc;
         }
 
         return [
             'name' => $name,
-            // 'price' => $price,
-            'price' => 55,
+            'price' => $price,
             'image' => $image,
         ];
     }
