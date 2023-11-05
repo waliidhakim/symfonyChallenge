@@ -155,8 +155,8 @@
 {% block javascripts %}
 	<script>
 		document.getElementById('copyButton').addEventListener('click', function (event) {
-var clipboardText = event.target.getAttribute('data-clipboard-text');
-navigator.clipboard.writeText(clipboardText).then(function () {
+const clipboardText = event.target.getAttribute('data-clipboard-text');
+navigator.clipboard.writeText("jkfghjkjkxfh").then(function () {
 alert('Link copied to clipboard!');
 }).catch(function (error) {
 alert('Failed to copy link. Please copy it manually : ', clipboardText);
