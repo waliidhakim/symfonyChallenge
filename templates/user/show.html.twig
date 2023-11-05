@@ -46,8 +46,10 @@
                 <th>Image</th>
                 <td>{{ user.image | default("N/A")}}</td>
             </tr> #}
-
-            {% if user.image is null or user.image == '' %}
+            <tr>
+                <th>Image</th>
+                <td>
+                    {% if user.image is null or user.image == '' %}
                     <a class="nav-link" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     {% else %}
                         {% if app.environment == 'prod' %}
@@ -58,8 +60,11 @@
                             {# Ici, c'est le chemin local vers l'image #}
                             <a class="nav-link" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('uploads/personnes/' ~ user.image) }}" alt="Profile Image" class="profile-image"></a>
                         {% endif %}
-            {% endif %}
+                    {% endif %}
 
+                </td>
+            </tr>    
+            
             <tr>
                 <th>CreatedAt</th>
                 <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : 'N\A' }}</td>
