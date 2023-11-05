@@ -5,12 +5,14 @@
 
 {% block body %}
 	<h1>GiftList</h1>
-	<button onclick="copyToClipboard(this)" data-href="http://challenge-symfony6-1-74638974b8fa.herokuapp.com/gift/listgift-choice/" class="btn btn-primary">
+
+	<a href="{{ path('app_gift_new', {'listGift_id' : gift_list.id}) }}" class="btn btn-primary">Add Gift</a>
+
+
+	<button id="copyButton" data-clipboard-text="http://challenge-symfony6-1-74638974b8fa.herokuapp.com/gift/listgift-choice/{{ gift_list.id }}">
 		Share Link
 		<i class="fa-solid fa-share"></i>
 	</button>
-	<a href="{{ path('app_gift_new', {'listGift_id' : gift_list.id}) }}" class="btn btn-primary">Add Gift</a>
-
 	<table class="table">
 		<tbody>
 			{#            <tr>#}
@@ -152,14 +154,14 @@
 
 {% block javascripts %}
 	<script>
-		function copyToClipboard(element) {
-let link = element.getAttribute('data-href') + '{{ gift_lists[0].id }}';
-navigator.clipboard.writeText(link).then(function () {
+		document.getElementById('copyButton').addEventListener('click', function (event) {
+var clipboardText = event.target.getAttribute('data-clipboard-text');
+navigator.clipboard.writeText(clipboardText).then(function () {
 alert('Link copied to clipboard!');
 }).catch(function (error) {
-alert('Error copying the link. Please copy it manually : ', link);
+alert('Failed to copy link. Please copy it manually : ', clipboardText);
 });
-}
+});
 	</script>
 
 {% endblock %}
