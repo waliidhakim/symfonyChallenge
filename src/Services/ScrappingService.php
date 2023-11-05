@@ -72,12 +72,12 @@ class ScrappingService
             throw new \Exception('CAPTCHA déclenché - arrêt du scraping pour cette URL.');
         }
 
-        //dd($crawler);
+        dd($crawler);
         // Exemple d'extraction des informations. A adapter en fonction des sites cibles.
         try {
             // $name = $crawler->filter("#productTitle")->text();
-            $price = $crawler->filter('.a-offscreen')->text();
             $name = $crawler->filter('#productTitle')->text('', true);
+            $price = $crawler->filter('.a-offscreen')->text();
             $image = $crawler->filter('.imgTagWrapper img')->attr('src');
         } catch (\Exception $exc) {
             dd($exc);
