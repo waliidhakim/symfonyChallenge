@@ -50,7 +50,8 @@ class UploaderService
     public function __construct(
         private SluggerInterface $slugger,
         private string $uploadsDirectory,
-        private S3Client $s3, private string $env)
+        private S3Client $s3,
+        private string $env)
     {
 
 //        $this->env = $env;
