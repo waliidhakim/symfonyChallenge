@@ -115,7 +115,7 @@ class ScrappingService
             // $image = $crawler->filter('.imgTagWrapper img')->attr('src');
 
             $name = $crawler->filter('.detailHeadline')->text('', true);
-            $price = $crawler->filter('#prdRightCol > section > div.buyBoxBlock > div > div.headerRecommandedOffer.spaceBetween.dspflexStart > div:nth-child(1) > div > p.price.typeNew.spacerBottomXs')->text();
+            //$price = $crawler->filter('#prdRightCol > section > div.buyBoxBlock > div > div.headerRecommandedOffer.spaceBetween.dspflexStart > div:nth-child(1) > div > p.price.typeNew.spacerBottomXs')->text();
             $image = $crawler->filter('.prdMainPhoto img')->attr('src');
         } catch (\Exception $exc) {
             dd($exc);
@@ -124,7 +124,8 @@ class ScrappingService
 
         return [
             'name' => $name,
-            'price' => $price,
+            // 'price' => $price,
+            'price' => 55,
             'image' => $image,
         ];
     }
