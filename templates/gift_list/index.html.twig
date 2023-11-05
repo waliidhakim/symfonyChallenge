@@ -1,103 +1,93 @@
 {% extends 'template.html.twig' %}
 
-{% block title %}My Gift lists{% endblock %}
-
-{% block body %}
-    <h1>My GiftLists</h1>
-    
-    <a href="{{ path('app_gift_list_new') }}">Create new <i class="fa-solid fa-square-plus fa-xl"></i></a>
-    <table class="table">
-        <thead>
-            <tr>
-{#                <th>Id</th>#}
-                <th>Title</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Status</th>
-                <th>Password</th>
-                <th>Begin Date</th>
-                <th>End Date</th>
-                <th>Theme</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for gift_list in gift_lists %}
-            <tr>
-{#                <td>{{ gift_list.id }}</td>#}
-                <td>{{ gift_list.title }}</td>
-                <td>{{ gift_list.description }}</td>
-{#                <td>{{ gift_list.image }}</td>#}
-                <td>
-                    {% if gift_list.image is null or gift_list.image == '' %}
-                        <a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-gift fa-xl"></i></a>
-                    {% else %}
-
-                        {% if app.environment == 'prod' %}
-                            {# Ici, mettez le chemin complet vers votre image sur le bucket S3 #}
-                            {# <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/personnes/{{ user.image }}" alt="Image" class="profile-image"></a> #}
-    {#                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/personnes/carlo-tentacule-250-65088328e622f.jpg" alt="Profile Image" class="profile-image"></a>#}
-                            <a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/giftlists/{{ gift_list.image }} " alt="Gift Image" class="profile-image"></a>
-                        {% else %}
-                            {# Ici, c'est le chemin local vers l'image #}
-                            {# <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('uploads/personnes/' ~ user.image) }}" alt="Profile Image" class="profile-image"></a> #}
-                            <a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{asset('uploads/giftlists/' ~ gift_list.image) }}" alt="Gift Image" class="profile-image"></a>
-                        {% endif %}
-
-                        
-                    {% endif %}
-
-                    {# {% if user.image is null or user.image == '' %}
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                    {% else %}
-                        {% if app.environment == 'prod' %}
-                            {# Ici, mettez le chemin complet vers votre image sur le bucket S3 
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/personnes/{{ user.image }}" alt="Image" class="profile-image"></a>
-    {#                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/personnes/carlo-tentacule-250-65088328e622f.jpg" alt="Profile Image" class="profile-image"></a>#}
-                        {# {% else %} #}
-                            {# Ici, c'est le chemin local vers l'image 
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('uploads/personnes/' ~ user.image) }}" alt="Profile Image" class="profile-image"></a>
-                        {% endif %}
-                    {% endif %} #}
-                </td>
-                <td>{{ gift_list.status ? 'Private' : 'Public' }}</td>
-                <td>{{ gift_list.password ? '*****' : 'None'}}</td>
-                <td>{{ gift_list.beginDate ? gift_list.beginDate|date('Y-m-d') : '' }}</td>
-                <td>{{ gift_list.endDate ? gift_list.endDate|date('Y-m-d') : '' }}</td>
-                <td>{{ gift_list.theme }}</td>
-                <td>
-                    <div class="d-flex align-items-center">
-                        <a href="{{ path('app_gift_list_show', {'id': gift_list.id}) }}"  class="m-2">
-                            <i class="fa-solid fa-circle-info fa-xl"></i>
-                        </a>
-                        <a href="{{ path('app_gift_list_edit', {'id': gift_list.id}) }}"  class="m-2">
-                            <i class="fa-solid fa-pen-to-square fa-xl"></i>
-                        </a>
-
-                        {{include('gift_list/_delete_form.html.twig') }}
-                    </div>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-{#    <a href="{{ path('app_gift_list_new') }}">Create new</a>#}
+{% block title %}My Gift lists
 {% endblock %}
 
+{% block body %}
+	<h1>My GiftLists</h1>
+
+	<a href="{{ path('app_gift_list_new') }}">Create new
+		<i class="fa-solid fa-square-plus fa-xl"></i>
+	</a>
+	<table class="table">
+		<thead>
+			<tr>
+				{#                <th>Id</th>#}
+				<th>Title</th>
+				<th>Description</th>
+				<th>Image</th>
+				<th>Status</th>
+				<th>Password</th>
+				<th>Begin Date</th>
+				<th>End Date</th>
+				<th>Theme</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for gift_list in gift_lists %}
+				<tr>
+					{#                <td>{{ gift_list.id }}</td>#}
+					<td>{{ gift_list.title }}</td>
+					<td>{{ gift_list.description }}</td>
+					{#                <td>{{ gift_list.image }}</td>#}
+					<td>
+						{% if gift_list.image is null or gift_list.image == '' %}
+							<a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="fa-solid fa-gift fa-xl"></i>
+							</a>
+						{% else %}
+
+							{% if app.environment == 'prod' %}
+								{# Ici, mettez le chemin complet vers votre image sur le bucket S3 #}
+								{# <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/personnes/{{ user.image }}" alt="Image" class="profile-image"></a> #}
+								{#                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/personnes/carlo-tentacule-250-65088328e622f.jpg" alt="Profile Image" class="profile-image"></a>#}<a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/giftlists/{{ gift_list.image }} " alt="Gift Image" class="profile-image"></a>
+							{% else %}
+								{# Ici, c'est le chemin local vers l'image #}
+								{# <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('uploads/personnes/' ~ user.image) }}" alt="Profile Image" class="profile-image"></a> #}<a class="nav-link " id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <img src="{{asset('uploads/giftlists/' ~ gift_list.image) }}" alt="Gift Image" class="profile-image"></a>
+							{% endif %}
 
 
-{% block javascripts %}
-     function copyToClipboard(element) {
-        let link = element.getAttribute('data-href') + '{{ gift_lists[0].id }}'; 
-        navigator.clipboard.writeText(link).then(function() {
-            alert('Link copied to clipboard!');
-        }).catch(function(error) {
-            alert('Error copying link: ', error);
-        });
-    }
+						{% endif %}
+
+						{# {% if user.image is null or user.image == '' %}
+						                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+						                    {% else %}
+						                        {% if app.environment == 'prod' %}
+						                            {# Ici, mettez le chemin complet vers votre image sur le bucket S3 
+						                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/personnes/{{ user.image }}" alt="Image" class="profile-image"></a>
+						    {#                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="https://challange-esgi.s3.eu-central-1.amazonaws.com/personnes/carlo-tentacule-250-65088328e622f.jpg" alt="Profile Image" class="profile-image"></a>#}
+					{# {% else %} #}
+						{# Ici, c'est le chemin local vers l'image 
+						                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('uploads/personnes/' ~ user.image) }}" alt="Profile Image" class="profile-image"></a>
+						                        {% endif %}
+						                    {% endif %} #}
+					</td>
+					<td>{{ gift_list.status ? 'Private' : 'Public' }}</td>
+					<td>{{ gift_list.password ? '*****' : 'None'}}</td>
+					<td>{{ gift_list.beginDate ? gift_list.beginDate|date('Y-m-d') : '' }}</td>
+					<td>{{ gift_list.endDate ? gift_list.endDate|date('Y-m-d') : '' }}</td>
+					<td>{{ gift_list.theme }}</td>
+					<td>
+						<div class="d-flex align-items-center">
+							<a href="{{ path('app_gift_list_show', {'id': gift_list.id}) }}" class="m-2">
+								<i class="fa-solid fa-circle-info fa-xl"></i>
+							</a>
+							<a href="{{ path('app_gift_list_edit', {'id': gift_list.id}) }}" class="m-2">
+								<i class="fa-solid fa-pen-to-square fa-xl"></i>
+							</a>
+
+							{{include('gift_list/_delete_form.html.twig') }}
+						</div>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="10">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	{#    <a href="{{ path('app_gift_list_new') }}">Create new</a>#}
 {% endblock %}
