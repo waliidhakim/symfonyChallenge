@@ -80,7 +80,7 @@ class ScrappingService
             $name = $crawler->filter('#productTitle')->text('', true);
             $image = $crawler->filter('.imgTagWrapper img')->attr('src');
         } catch (\Exception $exc) {
-            //dd($exc);
+            dd($exc);
             throw $exc;
         }
 
