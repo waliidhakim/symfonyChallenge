@@ -20,11 +20,9 @@ class UserType extends AbstractType
     {
         $builder
             ->add('firstname', TextType::class, [
-                'attr' => [
-
-                ],
+                'attr' => [],
                 'label' => 'Firstname',
-                'constraints' =>[
+                'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a Firstname',
                     ]),
@@ -40,11 +38,9 @@ class UserType extends AbstractType
 
             ])
             ->add('lastname', TextType::class, [
-                'attr' => [
-
-                ],
+                'attr' => [],
                 'label' => 'Lastname',
-                'constraints' =>[
+                'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a Lastname',
                     ]),
@@ -59,7 +55,9 @@ class UserType extends AbstractType
                 ]
 
             ])
-            ->add('age', IntegerType::class)
+            ->add('age', IntegerType::class, [
+                'required' => false
+            ])
             ->add('image', FileType::class, [
                 'label' => 'Your profile image (only image files)',
 
@@ -84,12 +82,12 @@ class UserType extends AbstractType
                     ])
                 ],
             ])
-            ->add('submit', SubmitType::class,[
-                'attr' =>[
+            ->add('submit', SubmitType::class, [
+                'attr' => [
                     'class' => 'btn btn-primary mt-4'
                 ]
             ])
-//            ->add('image')
+            //            ->add('image')
         ;
     }
 
