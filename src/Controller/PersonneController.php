@@ -29,12 +29,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 
-#[Route('/personne')]
+#[Route('/home')]
 //#[IsGranted('ROLE_USER')]
 class PersonneController extends AbstractController
 {
-    public function __construct(private EventDispatcherInterface $dispatcher){
-
+    public function __construct(private EventDispatcherInterface $dispatcher)
+    {
     }
 
     #[Route('/', name: 'personne.list')]
@@ -46,7 +46,7 @@ class PersonneController extends AbstractController
     }
 
     #[Route('/pdf/{id}', name: 'personne.pdf')]
-    public function generatePdfPersonne($id, ManagerRegistry $doctrine, PdfService $pdf )
+    public function generatePdfPersonne($id, ManagerRegistry $doctrine, PdfService $pdf)
     {
         $repository = $doctrine->getRepository(Personne::class);
         $personne = $repository->find($id);
@@ -56,23 +56,23 @@ class PersonneController extends AbstractController
         ]);
 
         $pdf->showPdfFile($html);
-
     }
 
     #[Route('/alls/{page?1}/{nbre?12}', name: 'personne.list.alls')]
-//    #[IsGranted('ROLE_USER')]
+    //    #[IsGranted('ROLE_USER')]
     public function indexAlls(ManagerRegistry $doctrine, $page, $nbre): Response
     {
         $repository = $doctrine->getRepository(Personne::class);
         $nbPersonne = $repository->count([]);
         $nbPage = ceil($nbPersonne / $nbre);
 
-        $personnes = $repository->findBy([], [], $nbre, ($page-1)*$nbre);
+        $personnes = $repository->findBy([], [], $nbre, ($page - 1) * $nbre);
         $listAllPersonneEvent = new ListAllPersonneEvent(count($personnes));
         $this->dispatcher->dispatch($listAllPersonneEvent, ListAllPersonneEvent::LIST_ALL_PERSONNE_EVENT);
 
 
-        return $this->render('personne/index.html.twig',
+        return $this->render(
+            'personne/index.html.twig',
             [
                 'personnes' => $personnes,
                 'isPaginated' => true,
@@ -81,7 +81,8 @@ class PersonneController extends AbstractController
                 'page' => $page,
                 'nbre' => $nbre
 
-            ]);
+            ]
+        );
     }
 
     #[Route('/{id<\d+>}', name: 'personne.detail')]
@@ -90,8 +91,7 @@ class PersonneController extends AbstractController
         $repository = $doctrine->getRepository(Personne::class);
         $personne = $repository->find($id);
 
-        if(!$personne)
-        {
+        if (!$personne) {
             //dd($personne);
             $this->addFlash('error', "La personne d'id $id n'existe pas");
             return $this->redirectToRoute('personne.list');
@@ -107,16 +107,13 @@ class PersonneController extends AbstractController
         $repository = $doctrine->getRepository(Personne::class);
         $personne = $repository->find($id);
 
-        if($personne)
-        {
+        if ($personne) {
             $manager = $doctrine->getManager();
             $manager->remove($personne);
             $manager->flush();
             //dd($personne);
             $this->addFlash('success', "La personne a été supprimé avec succès");
-        }
-        else
-        {
+        } else {
             //dd($personne);
             $this->addFlash('error', "La personne n'existe pas");
         }
@@ -125,11 +122,11 @@ class PersonneController extends AbstractController
     }
 
     #[Route('/update/{id<\d+>}/{name}/{firstname}/{age}', name: 'personne.update')]
-    public function updatePersonne(ManagerRegistry $doctrine, $id, $name,$firstname,$age): RedirectResponse
+    public function updatePersonne(ManagerRegistry $doctrine, $id, $name, $firstname, $age): RedirectResponse
     {
         $repository = $doctrine->getRepository(Personne::class);
         $personne = $repository->find($id);
-        if($personne) {
+        if ($personne) {
             $personne->setName($name);
             $personne->setFirstname($firstname);
             $personne->setAge($age);
@@ -137,8 +134,7 @@ class PersonneController extends AbstractController
             $doctrine->getManager()->persist($personne);
             $doctrine->getManager()->flush();
             $this->addFlash('success', "La personne a été mise à jour avec succès");
-        }
-        else {
+        } else {
             $this->addFlash('error', "La personne n'existe pas");
         }
 
@@ -155,27 +151,25 @@ class PersonneController extends AbstractController
         MailService $mailer
         /*MailerService $mailer*/
         /*SendinblueMailer $mailer*/
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
         $repository = $doctrine->getRepository(Personne::class);
         $personne = $repository->find($id);
 
         $new = false;
-        if(!$personne)
-        {
+        if (!$personne) {
             $new = true;
             $personne = new Personne();
         }
-//        dd($personne);
-        $form = $this->createForm(PersonneType::class,$personne );
+        //        dd($personne);
+        $form = $this->createForm(PersonneType::class, $personne);
         $form->remove('createdAt');
         $form->remove('updatedAt');
 
         $form->handleRequest($request);
 
-//        dd($this->getUser());
-        if($form->isSubmitted() && $form->isValid() ) {
+        //        dd($this->getUser());
+        if ($form->isSubmitted() && $form->isValid()) {
             //dd($personne);
             $manager = $doctrine->getManager();
 
@@ -204,8 +198,7 @@ class PersonneController extends AbstractController
                 $manager->persist($personne);
                 $manager->flush();
 
-                if($new)
-                {
+                if ($new) {
                     $addPersonneEvent = new AddPersonneEvent($personne);
                     $this->dispatcher->dispatch($addPersonneEvent, AddPersonneEvent::ADD_PERSONNE_EVENT);
                 }
@@ -224,15 +217,12 @@ class PersonneController extends AbstractController
 
                 return $this->redirectToRoute('personne.list');
             }
-
         }
 
 
         return $this->render('personne/add-personne.html.twig', [
             'form' => $form->createView(),
         ]);
-
-
     }
 
 
