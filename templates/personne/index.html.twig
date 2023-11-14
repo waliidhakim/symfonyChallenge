@@ -1,96 +1,99 @@
 {% extends 'template.html.twig' %}
 
-{% block title %}Liste des personnes{% endblock %}
+{% block title %}
+	Home
+{% endblock %}
 
 {% block body %}
 
-{#    <div class="row">#}
-{#        {% for personne in personnes %}#}
-{#            <div class="card" style="width: 18rem;">#}
-{#                <div class="card-body">#}
-{#                    <h5 class="card-title">{{ personne.name }}</h5>#}
-{#                    <h6 class="card-subtitle mb-2 text-muted">{{ personne.firstname }} {{personne.name }}</h6>#}
-{#                    <p class="card-text">Age : {{ personne.age }} ans</p>#}
-{#                    <a href="{{ path('personne.detail', {'id' : personne.id}) }}" class="card-link">#}
-{#                        <i class="fa-solid fa-circle-info"></i>#}
-{#                    </a>#}
-{#                    {% if is_granted('ROLE_ADMIN') %}#}
-{#                        <a href="{{ path('personne.delete', {'id' : personne.id}) }}" class="card-link">#}
-{#                            <i class="fa-solid fa-user-xmark"></i>#}
-{#                        </a>#}
-{#                        <a href="{{ path('personne.edit', {'id' : personne.id}) }}" class="card-link">#}
-{#                            <i class="fa-solid fa-user-pen"></i>#}
-{#                        </a>#}
-{#                    {% endif %}#}
-{#                </div>#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    </div>#}
+	{#    <div class="row">#}
+	{#        {% for personne in personnes %}#}
+	{#            <div class="card" style="width: 18rem;">#}
+	{#                <div class="card-body">#}
+	{#                    <h5 class="card-title">{{ personne.name }}</h5>#}
+	{#                    <h6 class="card-subtitle mb-2 text-muted">{{ personne.firstname }} {{personne.name }}</h6>#}
+	{#                    <p class="card-text">Age : {{ personne.age }} ans</p>#}
+	{#                    <a href="{{ path('personne.detail', {'id' : personne.id}) }}" class="card-link">#}
+	{#                        <i class="fa-solid fa-circle-info"></i>#}
+	{#                    </a>#}
+	{#                    {% if is_granted('ROLE_ADMIN') %}#}
+	{#                        <a href="{{ path('personne.delete', {'id' : personne.id}) }}" class="card-link">#}
+	{#                            <i class="fa-solid fa-user-xmark"></i>#}
+	{#                        </a>#}
+	{#                        <a href="{{ path('personne.edit', {'id' : personne.id}) }}" class="card-link">#}
+	{#                            <i class="fa-solid fa-user-pen"></i>#}
+	{#                        </a>#}
+	{#                    {% endif %}#}
+	{#                </div>#}
+	{#            </div>#}
+	{#        {% endfor %}#}
+	{#    </div>#}
 
-{#    {% if isPaginated is defined and isPaginated %}#}
+	{#    {% if isPaginated is defined and isPaginated %}#}
 
-{#        <nav aria-label="Page navigation example">#}
-{#            <ul class="pagination" style="display:flex; align-items: center; justify-content: center ">#}
-{#                {% if page != 1 %}#}
-{#                    <li class="page-item"><a class="page-link" href="{{ path('personne.list.alls', {'page' : page - 1 , 'nbre' : nbre  }) }}">Previous</a></li>#}
-{#                {% endif %}#}
+	{#        <nav aria-label="Page navigation example">#}
+	{#            <ul class="pagination" style="display:flex; align-items: center; justify-content: center ">#}
+	{#                {% if page != 1 %}#}
+	{#                    <li class="page-item"><a class="page-link" href="{{ path('personne.list.alls', {'page' : page - 1 , 'nbre' : nbre  }) }}">Previous</a></li>#}
+	{#                {% endif %}#}
 
-{#                {% for i in 1..nbPage %}#}
-{#                    <li class="page-item">#}
-{#                        <a class="page-link" href="{{ path('personne.list.alls', {'page' : i , 'nbre' : nbre  }) }}">{{ i }}</a>#}
-{#                    </li>#}
-{#                {% endfor  %}#}
+	{#                {% for i in 1..nbPage %}#}
+	{#                    <li class="page-item">#}
+	{#                        <a class="page-link" href="{{ path('personne.list.alls', {'page' : i , 'nbre' : nbre  }) }}">{{ i }}</a>#}
+	{#                    </li>#}
+	{#                {% endfor  %}#}
 
-{#                {% if page != nbPage %}#}
-{#                    <li class="page-item"><a class="page-link" href="{{ path('personne.list.alls', {'page' : page + 1 , 'nbre' : nbre  }) }}">Next</a></li>#}
-{#                {% endif %}#}
-{#            </ul>#}
-{#        </nav>#}
-{#    {% endif %}#}
-
-
+	{#                {% if page != nbPage %}#}
+	{#                    <li class="page-item"><a class="page-link" href="{{ path('personne.list.alls', {'page' : page + 1 , 'nbre' : nbre  }) }}">Next</a></li>#}
+	{#                {% endif %}#}
+	{#            </ul>#}
+	{#        </nav>#}
+	{#    {% endif %}#}
 
 
+	{#    <div class="container mt-5">#}
+	{#        <a href="{{ path('app_gift_list_index') }}" class="btn btn-secondary btn-lg">My gift lists</a>#}
+	{#        <a href="{{ path('app_gift_list_new') }}" class="btn btn-primary btn-lg mb-3">Create new gift list</a>#}
+	{#    </div>#}
 
-{#    <div class="container mt-5">#}
-{#        <a href="{{ path('app_gift_list_index') }}" class="btn btn-secondary btn-lg">My gift lists</a>#}
-{#        <a href="{{ path('app_gift_list_new') }}" class="btn btn-primary btn-lg mb-3">Create new gift list</a>#}
-{#    </div>#}
+		<div class="container mt-5 h-100"> <div class="row justify-content-center align-items-center h-100">
 
-    <div class="container mt-5 h-100">
-        <div class="row justify-content-center align-items-center h-100">
-
-            <div class="col-xl-3 col-md-6 custom-card">
-                <div class="card bg-primary text-white mb-4" >
-                    <div class="card-body">My gift lists</div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{ path('app_gift_list_index') }}">{#View Details#}</a>
-                        <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-xl-3 col-md-6 custom-card">
-                <div class="card bg-warning text-white mb-4" >
-                    <div class="card-body">Create new gift list</div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{ path('app_gift_list_new') }}">{#View Details#}</a>
-                        <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
-                    </div>
-                </div>
-            </div>
+			<div class="col-xl-3 col-md-6 custom-card">
+				<div class="card bg-primary text-white mb-4">
+					<div class="card-body">My gift lists</div>
+					<div class="card-footer d-flex align-items-center justify-content-between">
+						<a class="small text-white stretched-link" href="{{ path('app_gift_list_index') }}">{#View Details#}</a>
+						<div class="small text-white">
+							<svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 256 512" data-fa-i2svg="">
+								<path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path>
+							</svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+					</div>
+				</div>
+			</div>
 
 
+			<div class="col-xl-3 col-md-6 custom-card">
+				<div class="card bg-warning text-white mb-4">
+					<div class="card-body">Create new gift list</div>
+					<div class="card-footer d-flex align-items-center justify-content-between">
+						<a class="small text-white stretched-link" href="{{ path('app_gift_list_new') }}">{#View Details#}</a>
+						<div class="small text-white">
+							<svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 256 512" data-fa-i2svg="">
+								<path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path>
+							</svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+					</div>
+				</div>
+			</div>
 
-{#            <div class="col-md-6" style="background-color: #6c757d;"> <!-- #6c757d est la couleur du "btn-secondary" -->#}
-{#                <a href="{{ path('app_gift_list_index') }}" class="d-block text-center py-3 text-white">My gift lists</a>#}
-{#            </div>#}
 
-{#            <div class="col-md-6" style="background-color: #007bff;"> <!-- #007bff est la couleur du "btn-primary" -->#}
-{#                <a href="{{ path('app_gift_list_new') }}" class="d-block text-center py-3 text-white">Create new gift list</a>#}
-{#            </div>#}
-        </div>
-    </div>
+			{#            <div class="col-md-6" style="background-color: #6c757d;"> <!-- #6c757d est la couleur du "btn-secondary" -->#}
+		{#                <a href="{{ path('app_gift_list_index') }}" class="d-block text-center py-3 text-white">My gift lists</a>#}
+			{#            </div>#}
+
+			{#            <div class="col-md-6" style="background-color: #007bff;"> <!-- #007bff est la couleur du "btn-primary" -->#}
+			{#                <a href="{{ path('app_gift_list_new') }}" class="d-block text-center py-3 text-white">Create new gift list</a>#}
+			{#            </div>#}
+		</div>
+	</div>
 
 {% endblock %}
