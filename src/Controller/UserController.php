@@ -92,13 +92,20 @@ class UserController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UploaderService $uploaderService): Response
     {
         $form = $this->createForm(User1Type::class, $user);
         $form->remove('password');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $photo = $form->get('image')->getData();
+
+            if ($photo) {
+                $newFilename = $uploaderService->uploadFile($photo, "personnes");
+
+                $user->setImage($newFilename);
+            }
             $entityManager->flush();
             $this->addFlash('success', 'The User has been updated successfully');
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
