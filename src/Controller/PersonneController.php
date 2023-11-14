@@ -58,32 +58,32 @@ class PersonneController extends AbstractController
         $pdf->showPdfFile($html);
     }
 
-    #[Route('/alls/{page?1}/{nbre?12}', name: 'personne.list.alls')]
-    //    #[IsGranted('ROLE_USER')]
-    public function indexAlls(ManagerRegistry $doctrine, $page, $nbre): Response
-    {
-        $repository = $doctrine->getRepository(Personne::class);
-        $nbPersonne = $repository->count([]);
-        $nbPage = ceil($nbPersonne / $nbre);
+    // #[Route('/alls/{page?1}/{nbre?12}', name: 'personne.list.alls')]
+    // //    #[IsGranted('ROLE_USER')]
+    // public function indexAlls(ManagerRegistry $doctrine, $page, $nbre): Response
+    // {
+    //     $repository = $doctrine->getRepository(Personne::class);
+    //     $nbPersonne = $repository->count([]);
+    //     $nbPage = ceil($nbPersonne / $nbre);
 
-        $personnes = $repository->findBy([], [], $nbre, ($page - 1) * $nbre);
-        $listAllPersonneEvent = new ListAllPersonneEvent(count($personnes));
-        $this->dispatcher->dispatch($listAllPersonneEvent, ListAllPersonneEvent::LIST_ALL_PERSONNE_EVENT);
+    //     $personnes = $repository->findBy([], [], $nbre, ($page - 1) * $nbre);
+    //     $listAllPersonneEvent = new ListAllPersonneEvent(count($personnes));
+    //     $this->dispatcher->dispatch($listAllPersonneEvent, ListAllPersonneEvent::LIST_ALL_PERSONNE_EVENT);
 
 
-        return $this->render(
-            'personne/index.html.twig',
-            [
-                'personnes' => $personnes,
-                'isPaginated' => true,
-                'nbPersonne' => $nbPersonne,
-                'nbPage' => $nbPage,
-                'page' => $page,
-                'nbre' => $nbre
+    //     return $this->render(
+    //         'personne/index.html.twig',
+    //         [
+    //             'personnes' => $personnes,
+    //             'isPaginated' => true,
+    //             'nbPersonne' => $nbPersonne,
+    //             'nbPage' => $nbPage,
+    //             'page' => $page,
+    //             'nbre' => $nbre
 
-            ]
-        );
-    }
+    //         ]
+    //     );
+    // }
 
     #[Route('/{id<\d+>}', name: 'personne.detail')]
     public function detail(ManagerRegistry $doctrine, $id): Response
