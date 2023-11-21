@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
+
 #[Route('/gift/list')]
-#[IsGranted('ROLE_USER')]
 class GiftListController extends AbstractController
 {
     public function __construct( private Security $security)
@@ -25,7 +25,7 @@ class GiftListController extends AbstractController
     }
 
     #[Route('/', name: 'app_gift_list_index', methods: ['GET'])]
-
+    #[IsGranted('ROLE_USER')]
     public function getUserGiftLists(GiftListRepository $giftListRepository, UserRepository $userRepository): Response
     {
         /** @var User $user */
@@ -40,6 +40,7 @@ class GiftListController extends AbstractController
     }
 
     #[Route('/new', name: 'app_gift_list_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, EntityManagerInterface $entityManager, UploaderService $uploaderService): Response
     {
         $giftList = new GiftList();
@@ -73,14 +74,29 @@ class GiftListController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_gift_list_show', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function show(GiftList $giftList): Response
     {
+        /** @var User $user */
+        $user = $this->security->getUser();
+        //dd($user);
+
+
+        $creator = $giftList->getUser();
+        //dd($creatorId);
+
+        //dd($user !== $creator);
+        if ($user !== $creator) {
+            return $this->redirectToRoute('app_forbidden');
+        }
+
         return $this->render('gift_list/show.html.twig', [
             'gift_list' => $giftList,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_gift_list_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function edit(Request $request, GiftList $giftList, EntityManagerInterface $entityManager, UploaderService $uploaderService): Response
     {
         $form = $this->createForm(GiftListType::class, $giftList);
@@ -90,10 +106,7 @@ class GiftListController extends AbstractController
 
             $photo = $form->get('image')->getData();
             if ($photo) {
-//                $directory =  $this->getParameter('giftlists_directory');
-//                $uploadsDirectory =  $this->getParameter('uploads_directory');
-//                $directory =  $uploadsDirectory . "/giftlists";
-//                $newFilename = $uploaderService->uploadFile($photo, $directory);
+
                 $newFilename = $uploaderService->uploadFile($photo, "giftlists");
 
                 $giftList->setImage($newFilename);
@@ -111,6 +124,7 @@ class GiftListController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_gift_list_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
     public function delete(Request $request, GiftList $giftList, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$giftList->getId(), $request->request->get('_token'))) {

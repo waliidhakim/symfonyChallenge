@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Gift;
+use App\Entity\User;
 use App\Form\GiftType;
 use App\Form\GiftTypeExtended;
 use App\Repository\GiftListRepository;
@@ -15,12 +16,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/gifts')]
-#[IsGranted('ROLE_USER')]
+
 class GiftController extends AbstractController
 {
+    public function __construct( private Security $security)
+    {
+    }
     #[Route('/', name: 'app_gift_index', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(GiftRepository $giftRepository): Response
     {
         return $this->render('gift/index.html.twig', [
@@ -29,6 +35,7 @@ class GiftController extends AbstractController
     }
 
     #[Route('/new/{listGift_id?0}', name: 'app_gift_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -40,6 +47,13 @@ class GiftController extends AbstractController
     ) : Response
     {
         $giftList = $giftListRepository->findOneBy(['id' => $listGift_id]);
+
+        $creatorId = $giftList->getUser()->getId();
+        if ($this->security->getUser()->getId() !== $creatorId) {
+            //dd("je ne suis pas le créator");
+            return $this->redirectToRoute('app_forbidden');
+        }
+
         //dd($giftList);
         $gift = new Gift();
         $form = $this->createForm(GiftType::class, $gift);
@@ -47,6 +61,8 @@ class GiftController extends AbstractController
         $form->remove('price');
         $form->remove('image');
         $form->handleRequest($request);
+
+
 
 
 
@@ -103,6 +119,7 @@ class GiftController extends AbstractController
 
 
     #[Route('/new/extended/{listGift_id?0}', name: 'app_gift_new_extended', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function newExtended(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -114,7 +131,13 @@ class GiftController extends AbstractController
     ) : Response
     {
         $giftList = $giftListRepository->findOneBy(['id' => $listGift_id]);
-        //dd($giftList);
+        $creatorId = $giftList->getUser()->getId();
+        if ($this->security->getUser()->getId() !== $creatorId) {
+            //dd("je ne suis pas le créator");
+            return $this->redirectToRoute('app_forbidden');
+        }
+
+
         $gift = new Gift();
         $form = $this->createForm(GiftTypeExtended::class, $gift);
         $form->handleRequest($request);
@@ -157,9 +180,11 @@ class GiftController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_gift_show', methods: ['GET'])]
-    public function show(Gift $gift/*, $id, GiftRepository $repository*/): Response
+    public function show(Gift $gift /*, $id, GiftRepository $repository*/): Response
     {
+
 //        $gift = $repository->findBy(['id'=>$id]);
+        dd($gift);
         return $this->render('gift/show.html.twig', [
             'gift' => $gift,
         ]);
@@ -191,6 +216,7 @@ class GiftController extends AbstractController
         return $this->renderForm('gift/edit.html.twig', [
             'gift' => $gift,
             'form' => $form,
+            'giftListId' => $gift->getGiftList()->getId()
         ]);
     }
 

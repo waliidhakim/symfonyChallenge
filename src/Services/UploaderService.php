@@ -90,9 +90,10 @@ class UploaderService
         } else {
             // Local storage for dev
             try {
-                //dd($this->uploadsDirectory .  $directoryFolder);
+                // dd($this->uploadsDirectory . "/" . $directoryFolder);
+                
                 $file->move(
-                    $this->uploadsDirectory .  $directoryFolder,
+                    $this->uploadsDirectory . "/" .  $directoryFolder,
                     $newFilename
                 );
             } catch (FileException $e) {
