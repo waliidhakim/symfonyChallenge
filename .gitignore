@@ -8,8 +8,7 @@
 /var/
 /vendor/
 /.idea/
-.env
-.env.test
+
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
@@ -23,3 +22,7 @@
 ###< symfony/phpunit-bridge ###
 
 node_modules
+.env
+.env.test
+*.env
+.env

@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secur;
 
 
 #[Route('/gift/list')]
@@ -74,21 +75,17 @@ class GiftListController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_gift_list_show', methods: ['GET'])]
-    #[IsGranted('ROLE_USER')]
+    #[Secur("is_granted('ROLE_USER') and user == giftList.getUser()")]
+//    #[IsGranted('ROLE_USER')]
     public function show(GiftList $giftList): Response
     {
-        /** @var User $user */
-        $user = $this->security->getUser();
-        //dd($user);
-
-
-        $creator = $giftList->getUser();
-        //dd($creatorId);
-
-        //dd($user !== $creator);
-        if ($user !== $creator) {
-            return $this->redirectToRoute('app_forbidden');
-        }
+//        /** @var User $user */
+//        $user = $this->security->getUser();
+//        $creator = $giftList->getUser();
+//
+//        if ($user !== $creator) {
+//            return $this->redirectToRoute('app_forbidden');
+//        }
 
         return $this->render('gift_list/show.html.twig', [
             'gift_list' => $giftList,
